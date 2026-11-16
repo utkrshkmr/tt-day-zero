@@ -24,6 +24,7 @@ This repository holds the lab's process and plan. It has three parts:
 ## Layout
 
 ```
+_config.yml  GitHub Pages settings: theme, sidebar order, diagram rendering
 docs/        the three documents above, plus references
 templates/   triage note and run note
 tracking/    model coverage matrix (gap ledger and stack pins are added in Phases 0 and 2)

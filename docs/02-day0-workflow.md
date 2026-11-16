@@ -108,21 +108,21 @@ Things that go wrong on the day:
 
 - **Compilation happens on the first forward pass.** Pass 1 compiles, transfers weights and builds kernels. Pass 2 captures a runtime trace. Pass 3 onward is steady state. Warm up at least three passes before timing anything.
 - **Cast to `bfloat16` first.** `bfloat8_b` is a compile option to try afterwards, once accuracy on your workload is confirmed.
-- **Failures arrive in buckets,** and the bucket names the layer:
+- **Failures arrive in buckets,** and the bucket names the layer.
 
-  | Bucket | Meaning | Next step |
-  | --- | --- | --- |
-  | `FAILED_FE_COMPILATION` | Tracing to StableHLO failed | Simplify or rewrite the offending PyTorch construct; check for dynamic control flow |
-  | `FAILED_TTMLIR_COMPILATION` | An op has no lowering in tt-mlir | Reproduce with `ttmlir-opt`; add a decomposition or lowering, or work around in the model |
-  | `FAILED_RUNTIME` | A TT-NN op rejected its inputs, ran out of memory, or hung | Rerun from the flatbuffer with `ttrt`; this is a Layer 4 or 3 problem |
-  | `INCORRECT_RESULT` | PCC below threshold | Bisect by submodule; try `bfloat16` and higher fidelity |
+| Bucket | Meaning | Next step |
+| --- | --- | --- |
+| `FAILED_FE_COMPILATION` | Tracing to StableHLO failed | Simplify or rewrite the offending PyTorch construct; check for dynamic control flow |
+| `FAILED_TTMLIR_COMPILATION` | An op has no lowering in tt-mlir | Reproduce with `ttmlir-opt`; add a decomposition or lowering, or work around in the model |
+| `FAILED_RUNTIME` | A TT-NN op rejected its inputs, ran out of memory, or hung | Rerun from the flatbuffer with `ttrt`; this is a Layer 4 or 3 problem |
+| `INCORRECT_RESULT` | PCC below threshold | Bisect by submodule; try `bfloat16` and higher fidelity |
 
-- **Use the existing harness rather than a one-off script** when the model will be kept. Add a `loader.py` to tt-forge-models, then:
+**Use the existing harness rather than a one-off script** when the model will be kept. Add a `loader.py` to tt-forge-models, then:
 
-  ```bash
-  pytest --collect-only -q tests/runner/test_models.py -k "<model>"
-  pytest -vv "tests/runner/test_models.py::test_all_models[<node-id>]" --arch n300-llmbox
-  ```
+```bash
+pytest --collect-only -q tests/runner/test_models.py -k "<model>"
+pytest -vv "tests/runner/test_models.py::test_all_models[<node-id>]" --arch n300-llmbox
+```
 
 Path B produces a running baseline, a correctness reference, and an exact list of gaps. For research use that is often the finished state. For a model the lab will serve, it is the specification for Path C.
 

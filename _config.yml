@@ -1,0 +1,50 @@
+# GitHub Pages configuration. The site is built by GitHub from the main branch;
+# every Markdown file in the repository becomes a page. Navigation order and
+# titles are set here so the Markdown files need no front matter.
+
+title: tt-day-zero
+description: Day-0 model support on Tenstorrent Wormhole boxes
+
+remote_theme: just-the-docs/just-the-docs@v0.10.1
+plugins:
+  - jekyll-remote-theme
+  - jekyll-include-cache
+  - jekyll-seo-tag
+
+# Render ```mermaid code blocks as diagrams.
+mermaid:
+  version: "10.9.1"
+
+search_enabled: true
+heading_anchors: true
+back_to_top: true
+back_to_top_text: "Back to top"
+
+aux_links:
+  "Repository on GitHub": "https://github.com/utkrshkmr/tt-day-zero"
+aux_links_new_tab: true
+
+gh_edit_link: true
+gh_edit_link_text: "Edit this page on GitHub"
+gh_edit_repository: "https://github.com/utkrshkmr/tt-day-zero"
+gh_edit_branch: "main"
+gh_edit_view_mode: "edit"
+
+# Page titles and order in the sidebar.
+defaults:
+  - scope: { path: "README.md" }
+    values: { title: "Home", nav_order: 1 }
+  - scope: { path: "docs/01-stack-hierarchy.md" }
+    values: { title: "Stack hierarchy", nav_order: 2 }
+  - scope: { path: "docs/02-day0-workflow.md" }
+    values: { title: "Day-0 workflow", nav_order: 3 }
+  - scope: { path: "docs/03-roadmap.md" }
+    values: { title: "Roadmap", nav_order: 4 }
+  - scope: { path: "tracking/model-matrix.md" }
+    values: { title: "Model matrix", nav_order: 5 }
+  - scope: { path: "templates/triage.md" }
+    values: { title: "Template: triage note", nav_order: 6 }
+  - scope: { path: "templates/run-note.md" }
+    values: { title: "Template: run note", nav_order: 7 }
+  - scope: { path: "docs/04-references.md" }
+    values: { title: "References", nav_order: 8 }
